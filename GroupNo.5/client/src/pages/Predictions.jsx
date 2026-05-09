@@ -141,6 +141,25 @@ export default function Predictions() {
         <input className="ep-search" placeholder="Search predictions..." value={search} onChange={e => setSearch(e.target.value)}/>
       </div>
 
+      {STATIC_PREDS.filter(p => isBookmarked(p.num)).length > 0 && (
+        <div className="bookmarked-preds-section">
+          <h2 className="section-title" style={{textAlign:'left', fontSize:'1.5rem', marginBottom:'1rem'}}>Bookmarked Predictions</h2>
+          <div className="pred-grid" style={{marginBottom: '2rem'}}>
+            {STATIC_PREDS.filter(p => isBookmarked(p.num)).map(p => (
+              <button key={p.num}
+                className={`pred-chip ${active === p.num ? 'active' : ''}`}
+                style={{ '--chip-color': p.color }}
+                onClick={() => setActive(n => n === p.num ? null : p.num)}>
+                <span className="chip-num">{String(p.num).padStart(2,'0')}</span>
+                <span className="chip-label">{p.title}</span>
+                <span className="chip-tag">{p.tag}</span>
+              </button>
+            ))}
+          </div>
+          <h2 className="section-title" style={{textAlign:'left', fontSize:'1.5rem', marginBottom:'1rem'}}>All Predictions</h2>
+        </div>
+      )}
+
       <div className="pred-grid">
         {allPreds.map(p => (
           <button key={p.num}

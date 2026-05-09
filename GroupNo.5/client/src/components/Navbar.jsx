@@ -37,7 +37,18 @@ export default function Navbar() {
           {user?.role === 'admin' && (
             <li><span className="sp-admin-badge">Admin</span></li>
           )}
-          <li><span className="sp-user-name">Hi, {user?.name}</span></li>
+          <li className="sp-user-item">
+            <NavLink to="/profile" className="sp-user-profile-link" onClick={() => setOpen(false)}>
+              {user?.avatar ? (
+                <img src={user.avatar} alt={user.name} className="sp-user-avatar" />
+              ) : (
+                <div className="sp-user-avatar-placeholder">
+                  {user?.name?.[0]?.toUpperCase() || 'U'}
+                </div>
+              )}
+              <span className="sp-user-name">Hi, {user?.name}</span>
+            </NavLink>
+          </li>
           <li>
             <button className="btn-sp btn-sp-outline sp-logout" onClick={handleLogout}>
               Logout

@@ -24,7 +24,12 @@
   background: var(--accent2); color: white; font-size: 0.7rem; font-weight: 800;
   padding: 0.2rem 0.6rem; border-radius: 50px; text-transform: uppercase; letter-spacing: 1px;
 }
-.sp-user-name { font-size: 0.82rem; color: rgba(255,255,255,0.45); padding: 0 0.4rem; }
+.sp-user-item { display: flex; align-items: center; }
+.sp-user-profile-link { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; padding: 0.2rem 0.5rem; border-radius: 50px; transition: background 0.2s; }
+.sp-user-profile-link:hover { background: rgba(255,255,255,0.1); }
+.sp-user-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary); }
+.sp-user-avatar-placeholder { width: 32px; height: 32px; border-radius: 50%; background: var(--primary); color: #1A1A2E; display: flex; align-items: center; justify-content: center; font-weight: bold; font-family: 'Fredoka One', cursive; font-size: 0.9rem; }
+.sp-user-name { font-size: 0.82rem; color: rgba(255,255,255,0.85); padding: 0 0.4rem; white-space: nowrap; }
 .sp-logout { font-size: 0.82rem; padding: 0.3rem 0.9rem; border-color: rgba(255,255,255,0.25); color: rgba(255,255,255,0.55); }
 .sp-logout:hover { background: var(--accent2); border-color: var(--accent2); color: white; }
 

@@ -20,6 +20,7 @@ app.use('/api/reviews',     require('./routes/reviews'));
 mongoose.connect(process.env.MONGO_URI)
   .then(async () => {
     console.log('MongoDB connected');
+    await mongoose.connection.collection('users').dropIndex('username_1').catch(() => {});
     await seedAdmin();
   })
   .catch(err => console.error('MongoDB error:', err));

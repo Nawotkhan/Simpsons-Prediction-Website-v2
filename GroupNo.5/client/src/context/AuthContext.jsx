@@ -4,55 +4,55 @@ import axios from 'axios';
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-  const [token, setTokenState] = useState(() => localStorage.getItem('token') || null);
-  const [user,  setUser]       = useState(() => {
-    try {
-      const stored = localStorage.getItem('user');
-      return stored ? JSON.parse(stored) : null;
-    } catch { return null; }
-  });
+  const [user,  setUser]  = useState(null);
+  const [token, setToken] = useState(null);
+  const [ready, setReady] = useState(false);
 
-  // Keep axios header in sync whenever token changes
   useEffect(() => {
-    if (token) {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    } else {
-      delete axios.defaults.headers.common['Authorization'];
+    try {
+      const savedToken = localStorage.getItem('sp_token');
+      const savedUser  = localStorage.getItem('sp_user');
+      if (savedToken && savedUser) {
+        const parsedUser = JSON.parse(savedUser);
+        setToken(savedToken);
+        setUser(parsedUser);
+        axios.defaults.headers.common['Authorization'] = `Bearer ${savedToken}`;
+      }
+    } catch (e) {
+      localStorage.removeItem('sp_token');
+      localStorage.removeItem('sp_user');
+    } finally {
+      setReady(true);
     }
-  }, [token]);
+  }, []);
 
-  // FIX: setToken updates both state AND localStorage atomically
-  const setToken = (newToken) => {
-    setTokenState(newToken);
-    if (newToken) localStorage.setItem('token', newToken);
-    else localStorage.removeItem('token');
-  };
-
-  const updateUser = (newUser) => {
-    setUser(newUser);
-    if (newUser) localStorage.setItem('user', JSON.stringify(newUser));
-    else localStorage.removeItem('user');
-  };
-
-  const login = ({ token: t, user: u }) => {
-    setToken(t);
-    updateUser(u);
+  const login = (data) => {
+    setToken(data.token);
+    setUser(data.user);
+    axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
+    localStorage.setItem('sp_token', data.token);
+    localStorage.setItem('sp_user',  JSON.stringify(data.user));
   };
 
   const logout = () => {
     setToken(null);
-    updateUser(null);
+    setUser(null);
+    delete axios.defaults.headers.common['Authorization'];
+    localStorage.removeItem('sp_token');
+    localStorage.removeItem('sp_user');
   };
 
+  const updateUser = (updatedUser) => {
+    setUser(updatedUser);
+    localStorage.setItem('sp_user', JSON.stringify(updatedUser));
+  };
+
+  // Always render children — never block on ready
   return (
-    <AuthContext.Provider value={{ user, token, login, logout, updateUser, setToken }}>
+    <AuthContext.Provider value={{ user, token, ready, login, logout, updateUser }}>
       {children}
     </AuthContext.Provider>
   );
 }
 
-export function useAuth() {
-  const ctx = useContext(AuthContext);
-  if (!ctx) throw new Error('useAuth must be used inside <AuthProvider>');
-  return ctx;
-}
+export const useAuth = () => useContext(AuthContext);

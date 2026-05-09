@@ -41,7 +41,7 @@ export default function Profile() {
       // FIX: backend now returns { token, user } — update both
       const { data } = await axios.put('/api/auth/profile', form);
       if (data.token) {
-        localStorage.setItem('token', data.token);
+        localStorage.setItem('sp_token', data.token);
         axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
         if (setToken) setToken(data.token);         // keep AuthContext in sync
       }

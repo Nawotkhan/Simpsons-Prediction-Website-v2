@@ -1,24 +1,28 @@
 import { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import { useAuth } from './AuthContext';
 
 const BookmarksContext = createContext(null);
 
-const STORAGE_KEY = 'simpredictions_bookmarks';
-
 export function BookmarksProvider({ children }) {
-  // FIX: seed from localStorage so bookmarks survive page refresh
-  const [bookmarks, setBookmarks] = useState(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      return stored ? JSON.parse(stored) : [];
-    } catch {
-      return [];
-    }
-  });
+  const { user } = useAuth();
+  const [bookmarks, setBookmarks] = useState([]);
 
-  // Persist every change to localStorage
+  // Load user specific bookmarks
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(bookmarks));
-  }, [bookmarks]);
+    const key = user ? `sp_bookmarks_${user.id}` : 'sp_bookmarks_guest';
+    try {
+      const stored = localStorage.getItem(key);
+      setBookmarks(stored ? JSON.parse(stored) : []);
+    } catch {
+      setBookmarks([]);
+    }
+  }, [user]);
+
+  // Persist every change
+  useEffect(() => {
+    const key = user ? `sp_bookmarks_${user.id}` : 'sp_bookmarks_guest';
+    localStorage.setItem(key, JSON.stringify(bookmarks));
+  }, [bookmarks, user]);
 
   // b = { num, title, tag }  —  num is used as the unique key
   const addBookmark = useCallback((b) => {

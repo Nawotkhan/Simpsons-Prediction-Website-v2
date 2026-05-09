@@ -2,14 +2,22 @@ const express  = require('express');
 const mongoose = require('mongoose');
 const cors     = require('cors');
 require('dotenv').config();
+const path     = require('path');
+const fs       = require('fs');
 
 const app = express();
+
+const uploadsDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir);
+}
 
 app.use(cors({
   origin: ['http://localhost:5173', 'http://127.0.0.1:5173'],
   credentials: true
 }));
 app.use(express.json());
+app.use('/uploads', express.static(uploadsDir));
 
 // Routes
 app.use('/api/auth',        require('./routes/auth'));

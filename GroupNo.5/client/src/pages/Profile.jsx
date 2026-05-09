@@ -87,22 +87,32 @@ export default function Profile() {
           )}
 
           <form onSubmit={submit} className="profile-form">
-            {[
-              { label:'Full Name',  name:'name',   type:'text'  },
-              { label:'Email',      name:'email',  type:'email' },
-              { label:'Avatar URL', name:'avatar', type:'url', placeholder:'https://example.com/photo.jpg' },
-            ].map(f => (
-              <div key={f.name} className="pf-group">
-                <label>{f.label}</label>
-                <input
-                  type={f.type}
-                  name={f.name}
-                  value={form[f.name]}
-                  onChange={handle}
-                  placeholder={f.placeholder || ''}
-                />
-              </div>
-            ))}
+            <div className="pf-group">
+              <label>Full Name</label>
+              <input type="text" name="name" value={form.name} onChange={handle} />
+            </div>
+            <div className="pf-group">
+              <label>Email</label>
+              <input type="email" name="email" value={form.email} onChange={handle} />
+            </div>
+            <div className="pf-group">
+              <label>Upload Profile Picture</label>
+              <input type="file" accept="image/*" onChange={async (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                const formData = new FormData();
+                formData.append('avatar', file);
+                try {
+                  const { data } = await axios.post('/api/auth/upload-avatar', formData, {
+                    headers: { 'Content-Type': 'multipart/form-data' }
+                  });
+                  setForm(f => ({ ...f, avatar: data.avatarUrl }));
+                  setPreview(data.avatarUrl);
+                } catch (err) {
+                  setError('Failed to upload image.');
+                }
+              }} />
+            </div>
             <button type="submit" className="btn-sp btn-sp-primary" disabled={loading}>
               {loading ? 'Saving...' : 'Save Changes'}
             </button>

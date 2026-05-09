@@ -88,3 +88,13 @@ exports.deleteAccount = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
+exports.uploadAvatar = async (req, res) => {
+  try {
+    if (!req.file) return res.status(400).json({ message: 'No file uploaded' });
+    const avatarUrl = `/uploads/${req.file.filename}`;
+    res.json({ avatarUrl });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+};

@@ -8,6 +8,7 @@ export default function Login() {
   const [form,    setForm]    = useState({ email:'', password:'' });
   const [error,   setError]   = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const { login } = useAuth();
   const navigate  = useNavigate();
 
@@ -35,7 +36,10 @@ export default function Login() {
           <label>Email</label>
           <input type="email" name="email" value={form.email} onChange={handle} required placeholder="your@email.com"/>
           <label>Password</label>
-          <input type="password" name="password" value={form.password} onChange={handle} required placeholder="Password"/>
+          <div className="pwd-wrap">
+            <input type={showPassword ? "text" : "password"} name="password" value={form.password} onChange={handle} required placeholder="Password"/>
+            <button type="button" className="pwd-toggle" onClick={() => setShowPassword(!showPassword)}>{showPassword ? 'Hide' : 'Show'}</button>
+          </div>
           <button type="submit" className="btn-sp btn-sp-primary auth-submit" disabled={loading}>
             {loading ? 'Signing in...' : 'Sign In'}
           </button>

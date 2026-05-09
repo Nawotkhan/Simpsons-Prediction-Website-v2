@@ -28,6 +28,14 @@
   font-family: 'Nunito', sans-serif; font-size: 1rem;
   background: var(--input-bg); color: var(--text); transition: border-color 0.2s; margin-bottom: 0.3rem;
 }
+.pwd-wrap { position: relative; display: flex; margin-bottom: 0.3rem; }
+.pwd-wrap input { width: 100%; padding-right: 3.5rem; margin-bottom: 0; }
+.pwd-toggle { 
+  position: absolute; right: 0.8rem; top: 50%; transform: translateY(-50%);
+  background: none; border: none; font-size: 0.8rem; color: var(--text-muted); cursor: pointer;
+  font-family: inherit; font-weight: 600;
+}
+.pwd-toggle:hover { color: var(--primary); }
 .auth-form input:focus { outline:none; border-color:var(--primary); }
 .auth-submit { width:100%; margin-top:0.5rem; }
 .auth-switch { text-align:center; margin-top:1.4rem; font-size:0.9rem; color:var(--text-muted); }

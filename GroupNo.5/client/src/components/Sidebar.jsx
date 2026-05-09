@@ -7,8 +7,6 @@ export default function Sidebar() {
   const navigate   = useNavigate();
 
   const links = [
-    { to: '/episodes',    label: 'Browse Episodes'    },
-    { to: '/predictions', label: 'Browse Predictions' },
     { to: '/dashboard',   label: 'My Predictions'     },
     { to: '/bookmarks',   label: 'Bookmarks'          },
     { to: '/profile',     label: 'Profile'            },

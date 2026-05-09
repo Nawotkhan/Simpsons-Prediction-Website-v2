@@ -8,6 +8,7 @@ export default function Signup() {
   const [form,    setForm]    = useState({ name:'', email:'', password:'', university:'FAST NUCES', semester:'' });
   const [error,   setError]   = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const { login } = useAuth();
   const navigate  = useNavigate();
 
@@ -37,7 +38,10 @@ export default function Signup() {
           <label>Email</label>
           <input type="email"    name="email"      value={form.email}      onChange={handle} required placeholder="your@email.com"/>
           <label>Password</label>
-          <input type="password" name="password"   value={form.password}   onChange={handle} required placeholder="Min 6 characters" minLength={6}/>
+          <div className="pwd-wrap">
+            <input type={showPassword ? "text" : "password"} name="password"   value={form.password}   onChange={handle} required placeholder="Min 6 characters" minLength={6}/>
+            <button type="button" className="pwd-toggle" onClick={() => setShowPassword(!showPassword)}>{showPassword ? 'Hide' : 'Show'}</button>
+          </div>
           <label>University</label>
           <input type="text"     name="university" value={form.university} onChange={handle} placeholder="FAST NUCES"/>
           <label>Semester</label>

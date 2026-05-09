@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import './Auth.css';
 
 export default function Signup() {
-  const [form,    setForm]    = useState({ name:'', email:'', password:'', university:'FAST NUCES', semester:'' });
+  const [form, setForm] = useState({ name: '', email: '', password: '' });
   const [error,   setError]   = useState('');
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -42,10 +42,7 @@ export default function Signup() {
             <input type={showPassword ? "text" : "password"} name="password"   value={form.password}   onChange={handle} required placeholder="Min 6 characters" minLength={6}/>
             <button type="button" className="pwd-toggle" onClick={() => setShowPassword(!showPassword)}>{showPassword ? 'Hide' : 'Show'}</button>
           </div>
-          <label>University</label>
-          <input type="text"     name="university" value={form.university} onChange={handle} placeholder="FAST NUCES"/>
-          <label>Semester</label>
-          <input type="text"     name="semester"   value={form.semester}   onChange={handle} placeholder="e.g. 6th"/>
+
           <button type="submit" className="btn-sp btn-sp-primary auth-submit" disabled={loading}>
             {loading ? 'Creating...' : 'Create Account'}
           </button>

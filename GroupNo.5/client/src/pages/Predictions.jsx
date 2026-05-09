@@ -262,7 +262,9 @@ export default function Predictions() {
                 </div>
                 {(user?.id === p.submittedBy?._id || user?.role === 'admin') && (
                   <div className="upc-actions">
-                    <button className="btn-sp btn-sp-outline" style={{fontSize:'0.8rem',padding:'0.3rem 0.8rem'}} onClick={() => startEdit(p)}>Edit</button>
+                    {user?.id === p.submittedBy?._id && (
+                      <button className="btn-sp btn-sp-outline" style={{fontSize:'0.8rem',padding:'0.3rem 0.8rem'}} onClick={() => startEdit(p)}>Edit</button>
+                    )}
                     <button className="btn-sp btn-sp-danger"  style={{fontSize:'0.8rem',padding:'0.3rem 0.8rem'}} onClick={() => deletePred(p._id)}>Delete</button>
                   </div>
                 )}

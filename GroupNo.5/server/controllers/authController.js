@@ -11,13 +11,13 @@ const makeToken = (user) =>
 
 exports.signup = async (req, res) => {
   try {
-    const { name, email, password, university, semester } = req.body;
+    const { name, email, password } = req.body;
     if (!name || !email || !password)
       return res.status(400).json({ message: 'Name, email and password are required' });
     if (await User.findOne({ email }))
       return res.status(400).json({ message: 'Email already registered' });
     const hashed = await bcrypt.hash(password, 12);
-    const user   = await User.create({ name, email, password: hashed, university, semester });
+    const user   = await User.create({ name, email, password: hashed });
     const token  = makeToken(user);
     res.status(201).json({
       token,
@@ -57,9 +57,9 @@ exports.getProfile = async (req, res) => {
 
 exports.updateProfile = async (req, res) => {
   try {
-    const { name, email, university, semester, avatar } = req.body;
+    const { name, email, avatar } = req.body;
 
-    const updateData = { name, email, university, semester };
+    const updateData = { name, email };
     if (avatar !== undefined && avatar !== '') updateData.avatar = avatar;
 
     const user = await User.findByIdAndUpdate(

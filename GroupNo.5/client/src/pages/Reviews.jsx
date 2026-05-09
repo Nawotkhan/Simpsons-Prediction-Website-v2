@@ -4,16 +4,16 @@ import { useAuth } from '../context/AuthContext';
 import './Reviews.css';
 
 const SAMPLE = [
-  { username:'DoughnutDave',    rating:5, reviewText:'The Osaka Flu breakdown alone is worth the visit. Incredibly well-researched.' },
-  { username:'YellowFamilyFan', rating:5, reviewText:'The Predictions page is spectacular — dates, references and real source links.' },
-  { username:'ChalkboardKid',   rating:4, reviewText:'A physicist friend confirmed the Homer equation analysis was accurate.' },
-  { username:'Springfielder99', rating:5, reviewText:'Started with the Disney-Fox prediction and spent three hours here. Dark mode is gorgeous.' },
-  { username:'BartOnABoard',    rating:3, reviewText:'Love the predictions content. Perfect with faster mobile video loading.' },
+  { username: 'DoughnutDave', rating: 5, reviewText: 'The Osaka Flu breakdown alone is worth the visit. Incredibly well-researched.' },
+  { username: 'YellowFamilyFan', rating: 5, reviewText: 'The Predictions page is spectacular — dates, references and real source links.' },
+  { username: 'ChalkboardKid', rating: 4, reviewText: 'A physicist friend confirmed the Homer equation analysis was accurate.' },
+  { username: 'Springfielder99', rating: 5, reviewText: 'Started with the Disney-Fox prediction and spent three hours here. Dark mode is gorgeous.' },
+  { username: 'BartOnABoard', rating: 3, reviewText: 'Love the predictions content. Perfect with faster mobile video loading.' },
 ];
 
 const Stars = ({ value, onChange }) => (
   <div className="star-row">
-    {[1,2,3,4,5].map(s => (
+    {[1, 2, 3, 4, 5].map(s => (
       <button
         key={s} type="button"
         className={`star ${s <= value ? 'filled' : ''}`}
@@ -26,14 +26,14 @@ const Stars = ({ value, onChange }) => (
 );
 
 export default function Reviews() {
-  const { user, token }        = useAuth();
-  const [reviews, setReviews]  = useState([]);
-  const [form,    setForm]     = useState({ rating:0, reviewText:'' });
-  const [editing, setEditing]  = useState(null);
-  const [editForm,setEditForm] = useState({});
-  const [error,   setError]    = useState('');
-  const [success, setSuccess]  = useState('');
-  const [loading, setLoading]  = useState(false);
+  const { user, token } = useAuth();
+  const [reviews, setReviews] = useState([]);
+  const [form, setForm] = useState({ rating: 0, reviewText: '' });
+  const [editing, setEditing] = useState(null);
+  const [editForm, setEditForm] = useState({});
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+  const [loading, setLoading] = useState(false);
 
   // FIX: set auth header whenever token changes (was only running once)
   useEffect(() => {
@@ -46,7 +46,7 @@ export default function Reviews() {
     try {
       const { data } = await axios.get('/api/reviews');
       setReviews(data);
-    } catch {}
+    } catch { }
   };
 
   const submit = async e => {
@@ -55,8 +55,8 @@ export default function Reviews() {
     if (!form.rating) { setError('Please select a star rating.'); setLoading(false); return; }
     try {
       await axios.post('/api/reviews', form);
-      setSuccess('Review submitted — thank you!');
-      setForm({ rating:0, reviewText:'' });
+      setSuccess('Review submitted!');
+      setForm({ rating: 0, reviewText: '' });
       fetchReviews();
     } catch (err) {
       setError(err.response?.data?.message || 'Submission failed');
@@ -86,13 +86,17 @@ export default function Reviews() {
     }
   };
 
-  // FIX: compare against both r.user (ObjectId string) and r.user?._id (populated object)
-  // Also correctly handles admin role
-  const canModify = (r) => {
+  // FIX: Separate edit and delete permissions so admins can delete but not edit
+  const canEdit = (r) => {
     if (!user) return false;
-    if (user.role === 'admin') return true;
     const reviewUserId = r.user?._id ?? r.user;
     return String(reviewUserId) === String(user.id);
+  };
+
+  const canDelete = (r) => {
+    if (!user) return false;
+    if (user.role === 'admin') return true;
+    return canEdit(r);
   };
 
   return (
@@ -104,7 +108,7 @@ export default function Reviews() {
         <div className="rv-form-wrap fade-up">
           <h2 className="rv-form-title">Share Your Experience</h2>
           <p className="rv-form-sub">Tell the community what you found, what surprised you.</p>
-          {error   && <div className="rv-err">{error}</div>}
+          {error && <div className="rv-err">{error}</div>}
           {success && <div className="rv-ok">{success}</div>}
           <form onSubmit={submit} className="rv-form">
             <label>Your Rating</label>
@@ -122,7 +126,7 @@ export default function Reviews() {
           </form>
         </div>
       ) : (
-        <p style={{ textAlign:'center', color:'var(--text-muted)', padding:'1.5rem' }}>
+        <p style={{ textAlign: 'center', color: 'var(--text-muted)', padding: '1.5rem' }}>
           Please log in to leave a review.
         </p>
       )}
@@ -131,7 +135,7 @@ export default function Reviews() {
       <h2 className="rv-sub-title">What People Are Saying</h2>
       <div className="reviews-grid">
         {SAMPLE.map((r, i) => (
-          <div className="rv-card fade-up" key={i} style={{ animationDelay:`${i * 0.07}s` }}>
+          <div className="rv-card fade-up" key={i} style={{ animationDelay: `${i * 0.07}s` }}>
             <div className="rv-header">
               <div className="rv-avatar">{r.username[0].toUpperCase()}</div>
               <div>
@@ -163,7 +167,7 @@ export default function Reviews() {
                       value={editForm.reviewText ?? r.reviewText}
                       onChange={e => setEditForm({ ...editForm, reviewText: e.target.value })}
                     />
-                    <div style={{ display:'flex', gap:'0.5rem' }}>
+                    <div style={{ display: 'flex', gap: '0.5rem' }}>
                       <button className="btn-sp btn-sp-primary" onClick={() => saveEdit(r._id)}>Save</button>
                       <button className="btn-sp btn-sp-outline" onClick={() => { setEditing(null); setEditForm({}); }}>Cancel</button>
                     </div>
@@ -171,7 +175,7 @@ export default function Reviews() {
                 ) : (
                   <>
                     <div className="rv-header">
-                      <div className="rv-avatar" style={{ background:'var(--accent)' }}>
+                      <div className="rv-avatar" style={{ background: 'var(--accent)' }}>
                         {r.username?.[0]?.toUpperCase()}
                       </div>
                       <div>
@@ -181,22 +185,26 @@ export default function Reviews() {
                     </div>
                     <p className="rv-text">{r.reviewText}</p>
 
-                    {/* FIX: canModify now works for admin AND owner */}
-                    {canModify(r) && (
+                    {/* FIX: Admin can delete but only owner can edit */}
+                    {(canEdit(r) || canDelete(r)) && (
                       <div className="rv-actions">
-                        <button
-                          className="btn-sp btn-sp-outline"
-                          style={{ fontSize:'0.78rem', padding:'0.28rem 0.75rem' }}
-                          onClick={() => {
-                            setEditing(r._id);
-                            setEditForm({ rating: r.rating, reviewText: r.reviewText });
-                          }}
-                        >Edit</button>
-                        <button
-                          className="btn-sp btn-sp-danger"
-                          style={{ fontSize:'0.78rem', padding:'0.28rem 0.75rem' }}
-                          onClick={() => del(r._id)}
-                        >Delete</button>
+                        {canEdit(r) && (
+                          <button
+                            className="btn-sp btn-sp-outline"
+                            style={{ fontSize: '0.78rem', padding: '0.28rem 0.75rem' }}
+                            onClick={() => {
+                              setEditing(r._id);
+                              setEditForm({ rating: r.rating, reviewText: r.reviewText });
+                            }}
+                          >Edit</button>
+                        )}
+                        {canDelete(r) && (
+                          <button
+                            className="btn-sp btn-sp-danger"
+                            style={{ fontSize: '0.78rem', padding: '0.28rem 0.75rem' }}
+                            onClick={() => del(r._id)}
+                          >Delete</button>
+                        )}
                       </div>
                     )}
                   </>

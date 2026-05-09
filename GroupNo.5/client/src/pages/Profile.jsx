@@ -6,7 +6,7 @@ import './Profile.css';
 
 export default function Profile() {
   const { user, updateUser, setToken }     = useAuth();   
-  const [form,    setForm]                 = useState({ name:'', email:'', university:'', semester:'', avatar:'' });
+  const [form, setForm] = useState({ name: '', email: '', avatar: '' });
   const [preview, setPreview]              = useState('');
   const [success, setSuccess]              = useState('');
   const [error,   setError]               = useState('');
@@ -17,11 +17,9 @@ export default function Profile() {
     axios.get('/api/auth/profile')
       .then(({ data }) => {
         setForm({
-          name:       data.name        || '',
-          email:      data.email       || '',
-          university: data.university  || '',
-          semester:   data.semester    || '',
-          avatar:     data.avatar      || '',
+          name:   data.name   || '',
+          email:  data.email  || '',
+          avatar: data.avatar || '',
         });
         setPreview(data.avatar || '');
       })
@@ -90,11 +88,9 @@ export default function Profile() {
 
           <form onSubmit={submit} className="profile-form">
             {[
-              { label:'Full Name',  name:'name',       type:'text'  },
-              { label:'Email',      name:'email',      type:'email' },
-              { label:'University', name:'university', type:'text'  },
-              { label:'Semester',   name:'semester',   type:'text'  },
-              { label:'Avatar URL', name:'avatar',     type:'url',  placeholder:'https://example.com/photo.jpg' },
+              { label:'Full Name',  name:'name',   type:'text'  },
+              { label:'Email',      name:'email',  type:'email' },
+              { label:'Avatar URL', name:'avatar', type:'url', placeholder:'https://example.com/photo.jpg' },
             ].map(f => (
               <div key={f.name} className="pf-group">
                 <label>{f.label}</label>

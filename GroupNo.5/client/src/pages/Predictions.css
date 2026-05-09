@@ -1,0 +1,55 @@
+.predictions-page { max-width:960px; margin:0 auto; }
+.pred-search-wrap { display:flex; justify-content:center; margin-bottom:2rem; }
+.pred-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:1rem; margin-bottom:2.5rem; }
+.pred-chip {
+  display:flex; flex-direction:column; align-items:flex-start; gap:0.2rem;
+  background:var(--card-bg); border:2px solid var(--border); border-radius:14px;
+  padding:0.9rem; cursor:pointer; text-align:left; transition:all 0.22s;
+  font-family:'Nunito',sans-serif; color:var(--text);
+}
+.pred-chip:hover  { border-color:var(--chip-color,var(--primary)); transform:translateY(-3px); box-shadow:0 8px 20px var(--shadow); }
+.pred-chip.active { border-color:var(--chip-color,var(--primary)); background: color-mix(in srgb, var(--chip-color) 10%, var(--card-bg)); }
+.chip-num   { font-family:'Fredoka One',cursive; font-size:1.4rem; color:var(--chip-color,var(--primary)); line-height:1; }
+.chip-label { font-weight:700; font-size:0.9rem; line-height:1.3; }
+.chip-tag   { font-size:0.7rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; }
+
+.pred-panel { background:var(--card-bg); border:2px solid var(--panel-color,var(--primary)); border-radius:22px; overflow:hidden; box-shadow:0 12px 40px var(--shadow); margin-bottom:2.5rem; }
+.panel-top  { padding:1.8rem 2rem; background:color-mix(in srgb,var(--panel-color) 8%,var(--bg2)); border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:flex-start; gap:1rem; flex-wrap:wrap; }
+.panel-tag  { display:inline-block; color:#fff; font-size:0.72rem; font-weight:800; text-transform:uppercase; letter-spacing:1px; padding:0.2rem 0.75rem; border-radius:50px; margin-bottom:0.7rem; }
+.panel-title { font-family:'Fredoka One',cursive; font-size:1.7rem; color:var(--text); margin-bottom:0.5rem; }
+.panel-summary { font-size:0.97rem; color:var(--text-muted); line-height:1.7; }
+.bookmark-btn { flex-shrink:0; }
+.panel-body { padding:1.8rem 2rem; display:flex; flex-direction:column; gap:1.8rem; }
+.ps-title { font-family:'Fredoka One',cursive; font-size:1.15rem; color:var(--primary); margin-bottom:0.7rem; padding-bottom:0.3rem; border-bottom:2px dashed var(--border); }
+.panel-section p, .panel-section strong { font-size:0.96rem; line-height:1.8; color:var(--text); }
+.event-box { background:var(--bg2); border:2px solid; border-radius:14px; padding:1.3rem; }
+.event-date { font-size:0.78rem; font-weight:700; text-transform:uppercase; color:var(--text-muted); margin-top:0.2rem; }
+.pred-bullets { list-style:none; display:flex; flex-direction:column; gap:0.7rem; }
+.pred-bullets li { display:flex; align-items:flex-start; gap:0.7rem; font-size:0.94rem; line-height:1.6; }
+.bullet-dot { flex-shrink:0; width:10px; height:10px; border-radius:50%; margin-top:0.35rem; }
+.pred-images { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem; }
+.pred-figure { background:var(--bg2); border:1px solid var(--border); border-radius:12px; overflow:hidden; text-align:center; }
+.pred-figure img { width:100%; height:150px; object-fit:contain; padding:0.8rem; background:var(--surface); }
+.pred-figure figcaption { font-size:0.76rem; color:var(--text-muted); padding:0.4rem; border-top:1px solid var(--border); }
+.ref-link { display:inline-block; border:2px solid; border-radius:10px; padding:0.55rem 1.3rem; font-size:0.88rem; font-weight:700; transition:all 0.2s; }
+.ref-link:hover { background:var(--panel-color,var(--primary)); color:white !important; }
+
+.user-preds-section { margin-top:2rem; }
+.up-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem; }
+.pred-form { background:var(--card-bg); border:2px solid var(--border); border-radius:18px; padding:1.5rem; margin-bottom:1.5rem; display:flex; flex-direction:column; gap:0.7rem; }
+.pred-form h3 { font-family:'Fredoka One',cursive; color:var(--primary); font-size:1.3rem; }
+.pred-form input, .pred-form textarea { padding:0.65rem 1rem; border:2px solid var(--border); border-radius:12px; font-family:'Nunito',sans-serif; font-size:0.95rem; background:var(--input-bg); color:var(--text); resize:vertical; }
+.pred-form input:focus, .pred-form textarea:focus { outline:none; border-color:var(--primary); }
+.pred-form-err { background:rgba(255,107,107,0.12); border:1px solid var(--accent2); color:var(--accent2); padding:0.6rem; border-radius:8px; font-size:0.9rem; }
+.user-preds-list { display:flex; flex-direction:column; gap:1.2rem; }
+.no-preds { text-align:center; color:var(--text-muted); padding:2rem; }
+.user-pred-card { background:var(--card-bg); border:2px solid var(--border); border-radius:16px; padding:1.3rem; transition:all 0.25s; }
+.user-pred-card:hover { border-color:var(--primary); }
+.upc-header { display:flex; justify-content:space-between; align-items:flex-start; gap:1rem; margin-bottom:0.8rem; flex-wrap:wrap; }
+.upc-ep     { font-size:0.75rem; color:var(--accent); font-weight:700; text-transform:uppercase; }
+.upc-title  { font-family:'Fredoka One',cursive; font-size:1.15rem; color:var(--text); margin:0.2rem 0; }
+.upc-author { font-size:0.8rem; color:var(--text-muted); }
+.upc-actions { display:flex; gap:0.5rem; }
+.upc-interp { font-size:0.93rem; color:var(--text-muted); line-height:1.7; }
+.upc-timeline { margin-top:0.8rem; padding-left:1.2rem; color:var(--text-muted); font-size:0.88rem; line-height:1.7; }
+@media(max-width:600px) { .pred-grid { grid-template-columns:1fr 1fr; } }

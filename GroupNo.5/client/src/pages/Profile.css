@@ -1,0 +1,12 @@
+.profile-main { flex: 1; }
+.profile-card { background:var(--card-bg); border:2px solid var(--border); border-radius:22px; padding:2rem; max-width:540px; margin:0 auto; box-shadow:0 6px 28px var(--shadow); }
+.profile-avatar-wrap { display:flex; justify-content:center; margin-bottom:1rem; }
+.profile-avatar-img  { width:90px; height:90px; border-radius:50%; object-fit:cover; border:3px solid var(--primary); }
+.profile-avatar-placeholder { width:90px; height:90px; border-radius:50%; background:var(--primary); color:#1A1A2E; display:flex; align-items:center; justify-content:center; font-family:'Fredoka One',cursive; font-size:2.2rem; }
+.profile-name { font-family:'Fredoka One',cursive; font-size:1.6rem; color:var(--primary); text-align:center; margin-bottom:0.2rem; }
+.profile-role { display:block; text-align:center; font-size:0.8rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:1.4rem; }
+.profile-form { display:flex; flex-direction:column; gap:0.9rem; margin-top:1rem; }
+.pf-group { display:flex; flex-direction:column; gap:0.3rem; }
+.pf-group label { font-weight:700; font-size:0.8rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; }
+.pf-group input { padding:0.7rem 1rem; border:2px solid var(--border); border-radius:12px; font-family:'Nunito',sans-serif; font-size:0.97rem; background:var(--input-bg); color:var(--text); transition:border-color 0.2s; }
+.pf-group input:focus { outline:none; border-color:var(--primary); }

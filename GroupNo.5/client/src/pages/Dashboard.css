@@ -1,0 +1,15 @@
+.dashboard-layout { display:flex; min-height:100vh; position:relative; z-index:1; }
+.dashboard-main   { flex:1; }
+.dash-welcome { background:var(--card-bg); border:2px solid var(--border); border-radius:18px; padding:1.5rem 2rem; margin-bottom:2rem; }
+.dash-welcome h2 { font-family:'Fredoka One',cursive; font-size:1.6rem; color:var(--primary); margin-bottom:0.4rem; }
+.dash-welcome p  { color:var(--text-muted); font-size:0.95rem; }
+.role-badge { display:inline-block; padding:0.15rem 0.6rem; border-radius:50px; font-size:0.78rem; font-weight:800; text-transform:uppercase; }
+.role-badge.admin { background:var(--accent2); color:white; }
+.role-badge.user  { background:var(--primary);  color:#1A1A2E; }
+.dash-sub { font-family:'Fredoka One',cursive; font-size:1.3rem; color:var(--text); margin-bottom:1.2rem; }
+.my-preds-list { display:flex; flex-direction:column; gap:1rem; }
+.my-pred-card { background:var(--card-bg); border:2px solid var(--border); border-radius:14px; padding:1.2rem; display:flex; justify-content:space-between; align-items:flex-start; gap:1rem; transition:all 0.25s; flex-wrap:wrap; }
+.my-pred-card:hover { border-color:var(--primary); }
+.mpc-info h4 { font-family:'Fredoka One',cursive; font-size:1.1rem; color:var(--text); margin:0.25rem 0; }
+.mpc-info p  { font-size:0.88rem; color:var(--text-muted); line-height:1.6; }
+.no-preds    { color:var(--text-muted); text-align:center; padding:2rem; }
